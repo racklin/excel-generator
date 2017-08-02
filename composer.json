@@ -1,0 +1,24 @@
+{
+    "name": "racklin/excel-generator",
+    "description": "simple excel generator for laravel 5",
+    "keywords" : ["laravel", "excel", "phpexcel"],
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "Rack Lin",
+            "email": "racklin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.*",
+        "nicmart/string-template": "~0.1",
+        "phpoffice/phpexcel": "1.8.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Racklin\\ExcelGenerator": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

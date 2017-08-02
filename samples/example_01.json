@@ -1,0 +1,46 @@
+{
+  "info": {
+    "title": "Example 01",
+    "description": "",
+    "creator": "Rack Lin",
+    "subject": "Excel Generator example01",
+    "keywords": "xls, excel-generator"
+  },
+  "sheets": [
+    {
+      "info": {
+        "title": "工作表Sheet1",
+        "orientation": "landscape",
+        "page_size": "a4",
+        "table_title": "銷售報表",
+        "data_array_variable": "data"
+      },
+      "header": [
+        {
+          "title": "姓名",
+          "width": 10
+        },
+        {
+          "title": "電話",
+          "width": 12
+        },
+        {
+          "title": "備註",
+          "width": 20
+        },
+        {
+          "title": "負責人簽名",
+          "width": 10
+        }
+      ],
+      "data": [
+        {
+          "value": "中{a}"
+        },
+        {
+          "value": "廿{b} - {a}"
+        }
+      ]
+    }
+  ]
+}
