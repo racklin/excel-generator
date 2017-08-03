@@ -47,4 +47,11 @@ class ExcelDefaultStyle
             "vertical" => "center"
         ]
     ];
+
+    public static $TITLE_ROW_HEIGHT = 30;
+
+    public static $HEADER_ROW_HEIGHT = 20;
+
+    public static $DATA_ROW_HEIGHT = 15;
+
 }

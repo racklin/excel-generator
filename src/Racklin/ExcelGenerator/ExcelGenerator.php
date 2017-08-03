@@ -58,6 +58,10 @@ class ExcelGenerator
                 $activeSheet->getStyle($titleColNameStart)->applyFromArray(ExcelDefaultStyle::$TABLE_TITLE);
             }
 
+            // set row height
+            $rowHeight = isset($sheetSettings['info']['title_row_height']) ? $sheetSettings['info']['title_row_height'] : ExcelDefaultStyle::$TITLE_ROW_HEIGHT;
+            $activeSheet->getRowDimension($rowIndex)->setRowHeight($rowHeight);
+
             // process header
             $rowIndex++;
             foreach($sheetSettings['header'] as $headerIndex => $headerSettings) {
@@ -77,6 +81,10 @@ class ExcelGenerator
                 }
 
             }
+            // set row height
+            $rowHeight = isset($sheetSettings['info']['header_row_height']) ? $sheetSettings['info']['header_row_height'] : ExcelDefaultStyle::$HEADER_ROW_HEIGHT;
+            $activeSheet->getRowDimension($rowIndex)->setRowHeight($rowHeight);
+
 
             // process data
             foreach($dataArray as $dataValue) {
@@ -93,6 +101,10 @@ class ExcelGenerator
                         $activeSheet->getStyle($colName)->applyFromArray(ExcelDefaultStyle::$DATA);
                     }
                 }
+                // set row height
+                $rowHeight = isset($sheetSettings['info']['data_row_height']) ? $sheetSettings['info']['data_row_height'] : ExcelDefaultStyle::$DATA_ROW_HEIGHT;
+                $activeSheet->getRowDimension($rowIndex)->setRowHeight($rowHeight);
+
             }
 
             // set table borders
