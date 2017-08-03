@@ -91,7 +91,7 @@ class ExcelGenerator
                 $rowIndex++;
                 foreach($sheetSettings['data'] as $dataIndex => $dataSettings) {
                     $colName = $this->getExcelColumnName($dataIndex+1) . $rowIndex;
-                    $val = $this->stEngine->render($dataSettings['value'], $dataValue);
+                    $val = $this->renderText($dataSettings['value'], $dataValue);
                     $activeSheet->setCellValue($colName, $val);
 
                     // set cell style
@@ -172,6 +172,19 @@ class ExcelGenerator
         }
 
         return $columnName;
+    }
+
+
+    /**
+     * @param $template
+     * @param $data
+     * @return mixed|string
+     */
+    protected function renderText($template, $data) {
+        $text = $this->stEngine->render($template, $data);
+        // empty undefined variable
+        $text = preg_replace("/[\w.]+}/","", $text);
+        return $text;
     }
 
 
