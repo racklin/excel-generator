@@ -9,37 +9,36 @@
   "sheets": [
     {
       "info": {
-        "title": "工作表Sheet1",
+        "title": "Sheet1",
         "orientation": "landscape",
         "page_size": "a4",
-        "table_title": "銷售報表",
+        "table_title": "Sales Report",
         "data_array_variable": "data"
       },
       "header": [
         {
-          "title": "姓名",
+          "title": "Name",
           "width": 10
         },
         {
-          "title": "電話",
+          "title": "Tel",
           "width": 12
         },
         {
-          "title": "備註",
+          "title": "Memo",
           "width": 20
-        },
-        {
-          "title": "負責人簽名",
-          "width": 10
         }
       ],
       "data": [
         {
-          "value": "中{a}"
+          "value": "{a}"
         },
         {
-          "value": "廿{b} - {a}"
-        }
+          "value": "{b}"
+        },
+        {
+          "value": "Combine: {a} - {b}"
+        }        
       ]
     }
   ]

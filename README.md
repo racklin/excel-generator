@@ -34,11 +34,31 @@ Next, add the service provider to `config/app.php`.
 ```
 $excel = new ExcelGenerator();
 
-$excel->generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯"], '/tmp/example.xlsx', 'F');
+$excel->generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯", "data"=> [
+    ["a"=>"A1", "b"=>"B1"],
+    ["a"=>"A2", "b"=>"B2"],
+    ["a"=>"A3", "b"=>"B2"],
+    ["a"=>"A4", "b"=>"B2"],
+    ["a"=>"A5", "b"=>"B2"],
+    ["a"=>"A6", "b"=>"B2"],
+    ["a"=>"A7", "b"=>"B2"],
+    ["a"=>"A8", "b"=>"B2"],
+    ["a"=>"A9", "b"=>"B2"],
+]], '/tmp/example_01.xlsx', 'F');
 ```
 ## Laravel Facade 
 ```
-ExcelGen::generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯"], '/tmp/example.xlsx', 'F');
+ExcelGen::generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯", "data"=> [
+    ["a"=>"A1", "b"=>"B1"],
+    ["a"=>"A2", "b"=>"B2"],
+    ["a"=>"A3", "b"=>"B2"],
+    ["a"=>"A4", "b"=>"B2"],
+    ["a"=>"A5", "b"=>"B2"],
+    ["a"=>"A6", "b"=>"B2"],
+    ["a"=>"A7", "b"=>"B2"],
+    ["a"=>"A8", "b"=>"B2"],
+    ["a"=>"A9", "b"=>"B2"],
+]], '/tmp/example_01.xlsx', 'F');
 ```
 
 ## Laravel version

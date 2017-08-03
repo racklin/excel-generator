@@ -4,10 +4,10 @@ require '../vendor/autoload.php';
 
 use Racklin\ExcelGenerator\ExcelGenerator;
 
-$pdf = new ExcelGenerator();
+$excel = new ExcelGenerator();
 
 
-$pdf->generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯", "data"=> [
+$excel->generate('example_01.json', ["name"=>"rack", "cname"=>"阿土伯", "data"=> [
     ["a"=>"A1", "b"=>"B1"],
     ["a"=>"A2", "b"=>"B2"],
     ["a"=>"A3", "b"=>"B2"],
