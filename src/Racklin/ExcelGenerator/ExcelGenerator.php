@@ -31,10 +31,12 @@ class ExcelGenerator
         $phpExcel = $this->initPHPExcel($settings);
 
         foreach ($settings['sheets'] as $sheetIndex => $sheetSettings) {
+            if ($sheetIndex) {
+                $phpExcel->createSheet();
+            }
+
             $activeSheet = $this->initActiveSheet($phpExcel, $sheetIndex, $sheetSettings);
             $dataArray = [];
-
-            // WTF?
 
             $dataArrayVariable = $sheetSettings['info']['data_array_variable'];
             if (is_array($data[$dataArrayVariable])) {
