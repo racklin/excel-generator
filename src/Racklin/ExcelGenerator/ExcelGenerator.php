@@ -9,13 +9,11 @@ namespace Racklin\ExcelGenerator;
  */
 class ExcelGenerator
 {
-
     protected $stEngine = null;
 
     public function __construct()
     {
         $this->stEngine = new \StringTemplate\Engine;
-
     }
 
 
@@ -27,18 +25,21 @@ class ExcelGenerator
      * @param $name
      * @param $desc 'I', 'F', 'FI'
      */
-    public function generate($template, $data, $name = '', $desc = 'I') {
-
+    public function generate($template, $data, $name = '', $desc = 'I')
+    {
         $settings = json_decode(file_get_contents($template), true);
         $phpExcel = $this->initPHPExcel($settings);
 
         foreach ($settings['sheets'] as $sheetIndex => $sheetSettings) {
-
             $activeSheet = $this->initActiveSheet($phpExcel, $sheetIndex, $sheetSettings);
             $dataArray = [];
 
+            // WTF?
+
             $dataArrayVariable = $sheetSettings['info']['data_array_variable'];
-            if (is_array($data[$dataArrayVariable])) $dataArray = $data[$dataArrayVariable];
+            if (is_array($data[$dataArrayVariable])) {
+                $dataArray = $data[$dataArrayVariable];
+            }
 
             $rowIndex = 1;
 
@@ -54,7 +55,7 @@ class ExcelGenerator
             // set cell style
             if (isset($sheetSettings['info']['style']) && is_array($sheetSettings['info']['style'])) {
                 $activeSheet->getStyle($titleColNameStart)->applyFromArray(array_merge(ExcelDefaultStyle::$TABLE_TITLE, $sheetSettings['info']['style']));
-            }else {
+            } else {
                 $activeSheet->getStyle($titleColNameStart)->applyFromArray(ExcelDefaultStyle::$TABLE_TITLE);
             }
 
@@ -64,7 +65,7 @@ class ExcelGenerator
 
             // process header
             $rowIndex++;
-            foreach($sheetSettings['header'] as $headerIndex => $headerSettings) {
+            foreach ($sheetSettings['header'] as $headerIndex => $headerSettings) {
                 $colName = $this->getExcelColumnName($headerIndex+1) . $rowIndex;
                 $activeSheet->setCellValue($colName, $headerSettings['title']);
 
@@ -79,7 +80,6 @@ class ExcelGenerator
                 if (isset($headerSettings['width'])) {
                     $activeSheet->getColumnDimension($this->getExcelColumnName($headerIndex+1))->setWidth($headerSettings['width']);
                 }
-
             }
             // set row height
             $rowHeight = isset($sheetSettings['info']['header_row_height']) ? $sheetSettings['info']['header_row_height'] : ExcelDefaultStyle::$HEADER_ROW_HEIGHT;
@@ -87,9 +87,9 @@ class ExcelGenerator
 
 
             // process data
-            foreach($dataArray as $dataValue) {
+            foreach ($dataArray as $dataValue) {
                 $rowIndex++;
-                foreach($sheetSettings['data'] as $dataIndex => $dataSettings) {
+                foreach ($sheetSettings['data'] as $dataIndex => $dataSettings) {
                     $colName = $this->getExcelColumnName($dataIndex+1) . $rowIndex;
                     $val = $this->renderText($dataSettings['value'], $dataValue);
                     $activeSheet->setCellValue($colName, $val);
@@ -97,24 +97,21 @@ class ExcelGenerator
                     // set cell style
                     if (isset($dataSettings['style']) && is_array($dataSettings['style'])) {
                         $activeSheet->getStyle($colName)->applyFromArray(array_merge(ExcelDefaultStyle::$DATA, $dataSettings['style']));
-                    }else {
+                    } else {
                         $activeSheet->getStyle($colName)->applyFromArray(ExcelDefaultStyle::$DATA);
                     }
                 }
                 // set row height
                 $rowHeight = isset($sheetSettings['info']['data_row_height']) ? $sheetSettings['info']['data_row_height'] : ExcelDefaultStyle::$DATA_ROW_HEIGHT;
                 $activeSheet->getRowDimension($rowIndex)->setRowHeight($rowHeight);
-
             }
 
             // set table borders
             $activeSheet->getStyle('A1:'.$this->getExcelColumnName($maxHeaderCol).$rowIndex)->applyFromArray(ExcelDefaultStyle::$TABLE_BORDER);
-
         }
 
         // save or output
         $this->write($phpExcel, $name, $desc);
-
     }
 
 
@@ -122,9 +119,8 @@ class ExcelGenerator
      * @param $settings
      * @return \PHPExcel
      */
-    protected  function initPHPExcel($settings) {
-
-
+    protected function initPHPExcel($settings)
+    {
         $phpExcel = new \PHPExcel();
 
         // set document information
@@ -143,8 +139,8 @@ class ExcelGenerator
      * @param $sheetSettings
      * @return \PHPExcel_Worksheet
      */
-    protected function initActiveSheet(\PHPExcel $phpExcel, $sheetIndex, $sheetSettings) {
-
+    protected function initActiveSheet(\PHPExcel $phpExcel, $sheetIndex, $sheetSettings)
+    {
         $phpExcel->setActiveSheetIndex($sheetIndex);
         $activeSheet = $phpExcel->getActiveSheet();
 
@@ -159,8 +155,8 @@ class ExcelGenerator
      * @param $columnNumber
      * @return string
      */
-    protected function getExcelColumnName($columnNumber) {
-
+    protected function getExcelColumnName($columnNumber)
+    {
         $dividend = $columnNumber;
         $columnName = "";
         $modulo = 0;
@@ -180,10 +176,11 @@ class ExcelGenerator
      * @param $data
      * @return mixed|string
      */
-    protected function renderText($template, $data) {
+    protected function renderText($template, $data)
+    {
         $text = $this->stEngine->render($template, $data);
         // empty undefined variable
-        $text = preg_replace("/{[\w.]+}/","", $text);
+        $text = preg_replace("/{[\w.]+}/", "", $text);
         return $text;
     }
 
@@ -193,8 +190,8 @@ class ExcelGenerator
      * @param string $name
      * @param string $desc
      */
-    protected function write(\PHPExcel $phpExcel, $name='sheet.xlsx', $desc='I') {
-
+    protected function write(\PHPExcel $phpExcel, $name='sheet.xlsx', $desc='I')
+    {
         $writer = \PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
 
         switch ($desc) {
@@ -230,6 +227,5 @@ class ExcelGenerator
 
 
         }
-
     }
 }
